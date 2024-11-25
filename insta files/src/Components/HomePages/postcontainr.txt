@@ -1,0 +1,233 @@
+{/* Post Container */}
+        {posts.map((item: any, i: number) => (
+          <View style={styles.postContainer} key={i}>
+            {/* Post Header */}
+
+            <View style={styles.postHeader}>
+              <Pressable
+                style={styles.profileInfo}
+                onPress={() => navigation.navigate("Post", { user: user })}
+              >
+                <Image
+                  source={{ uri: user?.profilePic }}
+                  style={styles.avatar}
+                />
+                <View style={styles.userDetails}>
+                  <Text style={styles.username}>{user?.username}</Text>
+                  <Text style={styles.location}>{item?.location}</Text>
+                </View>
+              </Pressable>
+
+              <TouchableOpacity
+                style={{
+                  // backgroundColor: "red",
+                  padding: 10,
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  setPostData({ userId: user._id, postId: item._id });
+                  setPostModal(true);
+                }}
+              >
+                <Icons name="dots-three-vertical" color={"white"} size={20} />
+              </TouchableOpacity>
+            </View>
+
+            {/* Post Image */}
+            <View style={styles.postImageWrapper}>
+              <Image source={{ uri: item.image }} style={styles.postImage} />
+            </View>
+
+            {/* Like, Comment, Share, Save Section */}
+            <View style={styles.actionIcons}>
+              <View style={styles.leftIcons}>
+                {postlike[i] ? (
+                  <TouchableOpacity
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 7,
+                    }}
+                    onPress={() => {
+                      handleDeleteLike(item._id, i);
+                    }}
+                  >
+                    <FontAwesomeIcon name="heart" color={"red"} size={28} />
+                    <Text style={{ color: "white" }}>
+                      {item?.likes?.length}
+                    </Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleCreateLike(item._id, i);
+                    }}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 7,
+                    }}
+                  >
+                    <FontAwesomeIcon name="heart-o" color={"white"} size={28} />
+                    <Text style={{ color: "white" }}>
+                      {item?.likes?.length}
+                    </Text>
+                  </TouchableOpacity>
+                )}
+
+                <TouchableOpacity
+                  onPress={() => {
+                    handleshowCommentModal(item);
+                  }}
+                  style={{ flexDirection: "row", alignItems: "center", gap: 7 }}
+                >
+                  <Octicons name="comment" color={"white"} size={28} />
+                  <Text style={{ color: "white" }}>
+                    {item?.comment?.length}
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity>
+                  <FeatherIcon name="send" color={"white"} size={28} />
+                </TouchableOpacity>
+              </View>
+              <TouchableOpacity>
+                <FeatherIcon name="bookmark" color={"white"} size={28} />
+              </TouchableOpacity>
+            </View>
+
+            {/* Post Info */}
+            <View style={styles.postInfo}>
+              <Text style={styles.likesText}>{item?.likes?.length} likes</Text>
+              <Text style={styles.postDescription}>
+                <Text style={styles.username}>{user?.username} </Text>
+                {item.caption}
+              </Text>
+            </View>
+          </View>
+        ))}
+
+
+
+
+
+        ...............................................
+
+         {users.map((user: any, i) =>
+          user.posts.map((post: any, index: any) => (
+            // {/* Post Container */}
+            <View style={styles.postContainer} key={index}>
+              {/* Post Header */}
+
+              <View style={styles.postHeader}>
+                <Pressable
+                  style={styles.profileInfo}
+                  onPress={() => navigation.navigate("Post", { user: user })}
+                >
+                  <Image
+                    source={{ uri: user?.profilePic }}
+                    style={styles.avatar}
+                  />
+                  <View style={styles.userDetails}>
+                    <Text style={styles.username}>{user?.username}</Text>
+                    <Text style={styles.location}>{post?.location}</Text>
+                  </View>
+                </Pressable>
+
+                <TouchableOpacity
+                  style={{
+                    // backgroundColor: "red",
+                    padding: 10,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => {
+                    setPostData({ userId: user._id, postId: post._id });
+                    setPostModal(true);
+                  }}
+                >
+                  <Icons name="dots-three-vertical" color={"white"} size={20} />
+                </TouchableOpacity>
+              </View>
+
+              {/* Post Image */}
+              <View style={styles.postImageWrapper}>
+                <Image source={{ uri: post.image }} style={styles.postImage} />
+              </View>
+
+              {/* Like, Comment, Share, Save Section */}
+              <View style={styles.actionIcons}>
+                <View style={styles.leftIcons}>
+                  {post.likes.includes(userId) ? (
+                    <TouchableOpacity
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 7,
+                      }}
+                      onPress={() => {
+                        handleDeleteLike(post._id, i);
+                      }}
+                    >
+                      <FontAwesomeIcon name="heart" color={"red"} size={28} />
+                      <Text style={{ color: "white" }}>
+                        {post?.likes?.length}
+                      </Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity
+                      onPress={() => {
+                        handleCreateLike(post._id, i);
+                      }}
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        gap: 7,
+                      }}
+                    >
+                      <FontAwesomeIcon
+                        name="heart-o"
+                        color={"white"}
+                        size={28}
+                      />
+                      <Text style={{ color: "white" }}>
+                        {post?.likes?.length}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+
+                  <TouchableOpacity
+                    onPress={() => {
+                      handleshowCommentModal(post);
+                    }}
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 7,
+                    }}
+                  >
+                    <Octicons name="comment" color={"white"} size={28} />
+                    <Text style={{ color: "white" }}>
+                      {post?.comment?.length}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity>
+                    <FeatherIcon name="send" color={"white"} size={28} />
+                  </TouchableOpacity>
+                </View>
+                <TouchableOpacity>
+                  <FeatherIcon name="bookmark" color={"white"} size={28} />
+                </TouchableOpacity>
+              </View>
+
+              {/* Post Info */}
+              <View style={styles.postInfo}>
+                <Text style={styles.likesText}>
+                  {post?.likes?.length} likes
+                </Text>
+                <Text style={styles.postDescription}>
+                  <Text style={styles.username}>{user?.username} </Text>
+                  {post.caption}
+                </Text>
+              </View>
+            </View>
+          ))
+        )} 

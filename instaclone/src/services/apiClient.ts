@@ -15,6 +15,7 @@ import axios from 'axios';
 // export const BASE_URL = "http://192.168.137.139:3000";
 // export const BASE_URL = 'http://192.168.102.139:3000';
 // export const BASE_URL = 'http://192.168.45.139:3000';
+// export const BASE_URL = 'http://192.168.124.139:3000';
 export const BASE_URL = 'https://backend-insta-9x07.onrender.com';
 // Create an Axios instance
 const apiClient = axios.create({

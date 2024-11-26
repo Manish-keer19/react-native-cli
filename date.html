@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      const now = new Date();
+      console.log(now);
+      console.log("now.gettime() is ", now.getTime());
+      console.log(
+        "now.getTime()-24*60*60*1000",
+        now.getTime() - 24 * 60 * 60 * 1000
+      );
+    //   const expiryTime = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+      const expiryTime = new Date(now.getTime() - 1* 60 * 1000);
+      console.log("expiryTime", expiryTime);
+
+      
+      const diff = now.getTime() - expiryTime.getTime();
+      console.log("diff is ", diff);
+
+      const diffInDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+      console.log("diffInDays is ", diffInDays);
+
+      const diffInHours = Math.floor(diff / (1000 * 60 * 60));
+      console.log("diffInHours is ", diffInHours);
+
+      const diffInMinutes = Math.floor(diff / (1000 * 60));
+      console.log("diffInMinutes is ", diffInMinutes);
+
+    //   const createdAt = new Date("2024-11-21T05:44:09.742+00:00");
+        const createdAt = new Date('2024-11-24T09:44:09.742+00:00');
+      console.log("createdAt is ", createdAt);
+      console.log("expiryTime is ", expiryTime);
+
+      if (createdAt <= expiryTime) {
+        console.log("expired");
+      } else {
+        console.log("not expired");
+      }
+    </script>
+  </body>
+</html>

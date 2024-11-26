@@ -52,6 +52,7 @@ export default function AllStories({route}: any) {
         console.log('Res is ', res);
         setStories(res.story);
         setCurrentStoryIndex(0);
+        setLoading(false);
       }
     } catch (error) {
       console.log('Error fetching stories:', error);
@@ -182,7 +183,6 @@ export default function AllStories({route}: any) {
     console.log('story item is ', item);
     setStoryEditModal(true);
   };
-
 
   const handleStoryWatched = async (currentStoryIndex: number) => {
     console.log('currentStoryIndex is ', currentStoryIndex);
@@ -357,7 +357,7 @@ export default function AllStories({route}: any) {
         onRequestClose={() => setStoryEditModal(false)}>
         <StoryEditModal
           storydata={{
-            storyDocId: stories._id,
+            storyDocId: stories?._id,
             story: stories?.stories[currentStoryIndex],
           }}
           closeModal={() => setStoryEditModal(false)}
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#1e1e1e',
-    paddingTop:10,
+    paddingTop: 10,
   },
   centerContent: {
     justifyContent: 'center',
@@ -409,8 +409,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     // marginLeft: 20,
-    marginTop:15,
-    marginLeft:15,
+    marginTop: 15,
+    marginLeft: 15,
     //  borderWidth:2,
     // borderColor:"blue"
   },
@@ -418,12 +418,12 @@ const styles = StyleSheet.create({
     position: 'relative',
     // borderWidth:2,
     // borderColor:"blue"
-    width:30,
-    height:30,
+    width: 30,
+    height: 30,
   },
   profilePic: {
-   width:"100%",
-   height:"100%",
+    width: '100%',
+    height: '100%',
     borderRadius: 50,
     //  borderWidth:2,
     // borderColor:"blue"
@@ -457,7 +457,6 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     justifyContent: 'center',
     flexDirection: 'row',
-
   },
   leftTouchableArea: {
     flex: 1,

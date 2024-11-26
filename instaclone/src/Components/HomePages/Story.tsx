@@ -7,17 +7,24 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  ToastAndroid,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 // import { images } from "../../Utils/imagedata";
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {RootStackParamList} from '../../../Entryroute';
 import {StoryServiceInstance} from '../../services/storyServices';
+import {io} from 'socket.io-client';
+import {BASE_URL} from '../../services/apiClient';
+import {setUser} from '../../features/user/userSlice';
 
 export default function Story() {
+  const dispatch = useDispatch();
+  const socket = io(BASE_URL);
   const {user, token} = useSelector((state: any) => state.User);
+
   // console.log("user in story is", user);
   // console.log("user in story", user);
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -61,6 +68,24 @@ export default function Story() {
   useEffect(() => {
     getFollwerkiStorys();
   }, [token, user]);
+
+  // Listen for the "storyDeleted" event from the backend
+  // useEffect(() => {
+  //   // Listen for the "storyDeleted" event from the backend
+  //   socket.on('deletedStory', (userdata: any) => {
+  //     console.log('deletedStory event received', userdata);
+  //     getFollwerkiStorys();
+  //     dispatch(setUser(userdata));
+
+  //     ToastAndroid.show('story deleted', ToastAndroid.SHORT);
+  //   });
+
+  //   // Clean up the socket connection when the component is unmounted
+  //   return () => {
+  //     socket.disconnect(); // Explicitly calling disconnect within a cleanup function
+  //   };
+  // }, []); // Empty dependency array to run once on component mount/unmount
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -71,14 +96,14 @@ export default function Story() {
         <TouchableOpacity
           style={styles.storyContainer}
           onPress={() => {
-            user?.userStories?.length > 0
+            user?.userStories
               ? navigation.navigate('AllStories')
               : navigation.navigate('AddStory');
             // :alert("add story first");
           }}>
           <View
             style={[
-              user?.userStories?.length > 0
+              user?.userStories
                 ? styles.imageStoryContainer
                 : styles.imageContainer,
             ]}>
